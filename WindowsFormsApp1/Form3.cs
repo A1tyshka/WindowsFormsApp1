@@ -20,15 +20,29 @@ namespace WindowsFormsApp1
                 for (int j = 0; j < n; j++)
                     MatrText[i, j].Text = "0";
         }
+
+        private void Clear_MatrText1()
+        {
+            // Обнуление ячеек MatrText
+            for (int i = 0; i < n; i++)
+                for (int j = 1; j < 1; j++)
+                    MatrText1[i, 1].Text = "0";
+        }
+
         const int MaxN = 10; // максимально допустимая размерность матрицы
         int n = 3; // текущая размерность матрицы
+        int c = 3; // текущая размерность матрицы
         TextBox[,] MatrText = null; // матрица элементов типа
+
+        TextBox[,] MatrText1 = null; // матрица элементов типа
 
         double[,] Matr1 = new double[MaxN, MaxN]; // матрица 1 чисел с
          
         double[,] Matr2 = new double[MaxN, MaxN]; // матрица 2 чисел с
      
-        double[,] Matr3 = new double[MaxN, MaxN]; // матрица результатов
+        double[,] Matr_t = new double[MaxN, MaxN]; // матрица результатов
+        double[,] Matr4 = new double[MaxN, MaxN]; // матрица промеж результатов
+        double[,] Matr5 = new double[MaxN, MaxN]; // матрица промеж результатов
         bool f1; // флажок, который указывает о вводе данных в матрицу
    
         bool f2; // флажок, который указывает о вводе данных в матрицу
@@ -130,9 +144,9 @@ namespace WindowsFormsApp1
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < n; j++)
                 {
-                    Matr3[j, i] = 0;
+                    Matr_t[j, i] = 0;
                     for (int k = 0; k < n; k++)
-                        Matr3[j, i] = Matr3[j, i] + Matr1[k, i] * Matr2[j, k];
+                        Matr_t[j, i] = Matr_t[j, i] + Matr1[k, i] * Matr2[j, k];
                 }
             // 3. Внесение данных в MatrText
             for (int i = 0; i < n; i++)
@@ -141,7 +155,7 @@ namespace WindowsFormsApp1
                     // 3.1. Порядок табуляции
                     MatrText[i, j].TabIndex = i * n + j + 1;
                     // 3.2. Перевести число в строку
-                    MatrText[i, j].Text = Matr3[i, j].ToString();
+                    MatrText[i, j].Text = Matr_t[i, j].ToString();
                 }
             // 4. Вывод формы
             form4.ShowDialog();
@@ -168,7 +182,7 @@ namespace WindowsFormsApp1
             {
                 // формируем строку msg из элементов матрицы
                 for (int j = 0; j < n; j++)
-                    msg = msg + Matr3[i, j].ToString() + " ";
+                    msg = msg + Matr_t[i, j].ToString() + " ";
                 msg = msg + "\r\n";
                 // добавить перевод строки
             }
@@ -188,9 +202,9 @@ namespace WindowsFormsApp1
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < n; j++)
                 {
-                    Matr3[j, i] = 0;
+                    Matr_t[j, i] = 0;
                     for (int k = 0; k < n; k++)
-                        Matr3[j, i] = Matr1[j, i] + Matr2[j, i];
+                        Matr_t[j, i] = Matr1[j, i] + Matr2[j, i];
                 }
             // 3. Внесение данных в MatrText
             for (int i = 0; i < n; i++)
@@ -199,7 +213,7 @@ namespace WindowsFormsApp1
                     // 3.1. Порядок табуляции
                     MatrText[i, j].TabIndex = i * n + j + 1;
                     // 3.2. Перевести число в строку
-                    MatrText[i, j].Text = Matr3[i, j].ToString();
+                    MatrText[i, j].Text = Matr_t[i, j].ToString();
                 }
             // 4. Вывод формы
             form4.ShowDialog();
@@ -213,9 +227,9 @@ namespace WindowsFormsApp1
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < n; j++)
                 {
-                    Matr3[j, i] = 0;
+                    Matr_t[j, i] = 0;
                     for (int k = 0; k < n; k++)
-                        Matr3[j, i] = Matr1[j, i] - Matr2[j, i];
+                        Matr_t[j, i] = Matr1[j, i] - Matr2[j, i];
                 }
             // 3. Внесение данных в MatrText
             for (int i = 0; i < n; i++)
@@ -224,7 +238,7 @@ namespace WindowsFormsApp1
                     // 3.1. Порядок табуляции
                     MatrText[i, j].TabIndex = i * n + j + 1;
                     // 3.2. Перевести число в строку
-                    MatrText[i, j].Text = Matr3[i, j].ToString();
+                    MatrText[i, j].Text = Matr_t[i, j].ToString();
                 }
             // 4. Вывод формы
             form4.ShowDialog();
@@ -252,64 +266,101 @@ namespace WindowsFormsApp1
 
         private void button7_Click(object sender, EventArgs e)
         {
-            // 1. Проверка, введены ли данные в обеих матрицах
-            if (!((f1 == true) && (f2 == true))) return;
-            // 2. Вычисление произведения матриц. Результат в Matr3
+            if (!(f1 == true)) return;
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < n; j++)
                 {
-                    {
-                        Console.WriteLine("Введите количество NxM элементов матрицы sample: ");
-                        int N = 0;
-                        int M = 0;
-
-                        string str = Console.ReadLine();
-                        string stl = Console.ReadLine();
-                        N = int.Parse(str);
-                        M = int.Parse(stl);
-
-
-                        Console.WriteLine("Исходная матрица: ");
-                        Console.WriteLine();
-                        int[,] sample = new int[N, M];
-                        Random rnd = new Random();
-
-                        for (int o = 0; o < N; o++)
-                        {
-                            for (int k = 0; k < M; k++)
-                            {
-                                sample[o, k] = rnd.Next(1, 100); // заполнение матрицы случайными числами
-                                Console.Write(sample[o, k] + " \t ");
-                            }
-                            Console.WriteLine();
-                        }
-                        int[,] trans = new int[M, N];
-                        Console.WriteLine();
-                        Console.WriteLine("Транспонированная матрица: ");
-                        Console.WriteLine();
-                        for (int o = 0; o < M; o++)
-                        {
-                            for (int k = 0; k < N; k++)
-                            {
-                                trans[o, k] = sample[k, o];
-                                Console.Write(trans[o, k] + " \t ");
-                            }
-                            Console.WriteLine();
-                        }
-                        Console.ReadLine();
-                    }
+                    Matr_t[j, i] = 0;
+                    Matr4[j, i] = 0;
+                    for (int k = 0; k < n; k++)
+                        Matr4[j, i] = Matr2[i, j];
+                        Matr_t[i, j] = Matr1[j, i];
                 }
-            // 3. Внесение данных в MatrText
             for (int i = 0; i < n; i++)
                 for (int j = 0; j < n; j++)
                 {
                     // 3.1. Порядок табуляции
                     MatrText[i, j].TabIndex = i * n + j + 1;
                     // 3.2. Перевести число в строку
-                    MatrText[i, j].Text = Matr3[i, j].ToString();
+                    MatrText[i, j].Text = Matr_t[i, j].ToString();
+                    MatrText[i, j].Text = Matr4[i, j].ToString();
                 }
             // 4. Вывод формы
             form4.ShowDialog();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            // 1. Чтение размерности матрицы
+            if (textBox1.Text == "") return;
+            n = int.Parse(textBox1.Text);       // 2. Обнуление ячейки MatrText
+            Clear_MatrText();       // 3. Настройка свойств ячеек матрицы MatrText
+                                    // с привязкой к значению n и форме
+         for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+            {
+                // 3.1. Порядок табуляции
+            MatrText[i, 1].TabIndex = i * n + 1;
+                // 3.2. Сделать ячейку видимой
+            MatrText[i, 1].Visible = true;
+            }// 4. Корректировка размеров формы
+            form4.Width = 10 + n * dx + 20; 
+            form4.Height = 10 + n * dy + form4.button1.Height + 50;
+            // 5. Корректировка позиции и размеров кнопки на форме Form2
+            form4.button1.Left = 10;
+            form4.button1.Top = 10 + n * dy + 10; 
+            form4.button1.Width = form4.Width - 30;
+            // 6. Вызов формы Form2
+            if (form4.ShowDialog() == DialogResult.OK)
+            {    // 7. Перенос строк из формы Form2 в матрицу Matr1
+
+                for (int i = 0; i < n; i++) for (int j = 0; j < n; j++)
+                        if (MatrText[i, j].Text != "") 
+                            Matr1[i, 1] = Double.Parse(MatrText[i, 1].Text);
+                        else Matr1[i, 1] = 0;
+                // 8. Данные в матрицу Matr1 внесены
+                f1 = true;
+                label2.Text = "true";
+            }
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if (textBox5.Text == "") return;
+            c = int.Parse(textBox5.Text);        
+            // 2. Вычисление произведения матриц. Результат в Matr3
+            for (int i = 0; i < c; i++)
+                for (int j = 0; j < c; j++)
+                {
+                    Matr1[j, i] = Matr1[j, i] * c;
+                }
+            // 3. Внесение данных в MatrText
+            for (int i = 0; i < c; i++)
+                for (int j = 0; j < c; j++)
+                {
+                    // 3.1. Порядок табуляции
+                    MatrText[i, j].TabIndex = i * c + j + 1;
+                    // 3.2. Перевести число в строку
+                    MatrText[i, j].Text = Matr1[i, j].ToString();
+                }
+            // 4. Вывод формы
+            form4.ShowDialog();
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void button1_Click(object sender, EventArgs e)
