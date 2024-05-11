@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Задание_10;
 
 namespace LAB3_2D_PICTURES
 {
@@ -21,7 +22,7 @@ namespace LAB3_2D_PICTURES
         private void button1_Click(object sender, EventArgs e)
         {
             Form1 f = new Form1();
-            f.showdialog;
+            f.ShowDialog();
         }
 
         private void button2_Click(object sender, EventArgs e)
